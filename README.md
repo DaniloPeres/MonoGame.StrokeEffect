@@ -14,6 +14,10 @@ There is a nuget package avaliable here https://www.nuget.org/packages/MonoGame.
   <img src="http://daniloperes.com/MonoGame.StrokeEffect.Sample.gif" alt="MonoGame.StrokeEffect" width="600" height="493">
 </p>
 
+https://github.com/DaniloPeres/MonoGame.StrokeEffect/tree/main/MonoGame.StrokeEffect-Samples
+
+# How to use
+
 ## Stroke Types:
 
 - 'OutlineAndTexture' - Create a new Texture with the original Texture and an outline stroke
