@@ -10,11 +10,13 @@ There is a nuget package avaliable here https://www.nuget.org/packages/MonoGame.
 
 # Examples
 
-<p align="center">
-  <img src="http://daniloperes.com/MonoGame.StrokeEffect.Sample.gif" alt="MonoGame.StrokeEffect" width="600" height="493">
-</p>
+<img src="http://daniloperes.com/MonoGame.StrokeEffect.Sample.gif" alt="MonoGame.StrokeEffect" width="600" height="493">
 
 https://github.com/DaniloPeres/MonoGame.StrokeEffect/tree/main/MonoGame.StrokeEffect-Samples
+
+## Anti-Aliasing
+
+<img src="http://daniloperes.com/MonoGame.StrokeEffect.Anti-Aliasing.png" alt="MonoGame.StrokeEffect" width="450" height="114">
 
 # How to use
 
