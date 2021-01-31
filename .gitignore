@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/MonoGame.StrokeEffect/bin
+/MonoGame.StrokeEffect/obj
+/MonoGame.StrokeEffect-Samples/bin
+/MonoGame.StrokeEffect-Samples/obj
+/MonoGame.StrokeEffect-Samples/Content/bin
+/MonoGame.StrokeEffect-Samples/Content/obj

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Danilo Peres</Authors>
+    <Company>Danilo Peres</Company>
+    <Description>MonoGame.StrokeEffect is a library to generate strokes for Texture2D in MonoGame.
+We also support Sprite Font.</Description>
+    <Copyright>Copyright 2020 Danilo Peres</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageIcon>MonoGaame.StrokeEffect_Logo_256.png</PackageIcon>
+    <RepositoryUrl>https://github.com/DaniloPeres/MySqlHelper</RepositoryUrl>
+    <PackageTags>MonoGame stroke effect, Monogame stroke, Monogame border, Monogame outline</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MonoGaame.StrokeEffect_Logo_256.png" />
+    <None Remove="MonoGaame.StrokeEffect_Logo_256.png" />
+    <None Include="MonoGaame.StrokeEffect_Logo_256.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
