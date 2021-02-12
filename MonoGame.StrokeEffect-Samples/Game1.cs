@@ -20,6 +20,7 @@ namespace MonoGame.StrokeEffect_Samples
         Drawables.Image
             imgObjCamera,
             imgObjGlobe,
+            imgObjSurge,
             imgObjMultipleText,
             imgObjHeart,
             imgObjImagePlus,
@@ -28,27 +29,24 @@ namespace MonoGame.StrokeEffect_Samples
             imgObjTextOutlineWithTextureCheckbox,
             imgObjTextOutlineWithoutTexture,
             imgObjTextOutlineWithoutTextureCheckbox,
-            imgObjTextInlineWithoutTexture,
-            imgObjTextInlineWithoutTextureCheckbox,
-            imgObjTextOutlineAndInlineWithoutTexture,
-            imgObjTextOutlineAndInlineWithoutTextureCheckbox,
             imgObjTextSize,
             imgObjTextSizeNumber,
             imgObjTextColor,
             imgObjTextSprintFontStroke,
             imgObjTextSmall,
             imgObjTextBigText,
-            imgObjColorSelected;
+            imgObjColorSelected,
+            imgObjFpsText;
 
-        Texture2D
+       Texture2D
             imgPixel,
             imgCheckBox,
             imgCheckBoxChecked,
             imgCameraOriginal,
             imgGlobeOriginal,
+            imgSurgeOriginal,
             imgHeartOriginal,
             imgImagePlusOriginal;
-
 
         Color strokeColor = Color.White;
 
@@ -56,12 +54,18 @@ namespace MonoGame.StrokeEffect_Samples
 
         int strokeSize = 3;
 
+        int lastFpsCount = 0;
+        int fpsCount = 0;
+        TimeSpan fpsTimeSpan = new TimeSpan();
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            graphics.SynchronizeWithVerticalRetrace = false;
+            IsFixedTimeStep = false;
         }
 
         protected override void Initialize()
@@ -84,7 +88,6 @@ namespace MonoGame.StrokeEffect_Samples
             arialSpriteFont = Content.Load<SpriteFont>("Arial");
             cooperBlackSpriteFont = Content.Load<SpriteFont>("CooperBlack");
 
-
             imgCheckBox = Content.Load<Texture2D>("CheckBox");
             imgCheckBoxChecked = Content.Load<Texture2D>("CheckBox_Checked");
 
@@ -92,9 +95,9 @@ namespace MonoGame.StrokeEffect_Samples
             imgGlobeOriginal = Content.Load<Texture2D>("globe");
             imgHeartOriginal = Content.Load<Texture2D>("heart");
             imgImagePlusOriginal = Content.Load<Texture2D>("picture-plus");
+            imgSurgeOriginal = Content.Load<Texture2D>("surge");
 
-
-            var pos = new Vector2(50, 15);
+            var pos = new Vector2(50, 50);
 
             imgObjTextType = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos));
             pos.X += 100;
@@ -114,24 +117,6 @@ namespace MonoGame.StrokeEffect_Samples
                 UpdateTextureOutlines();
             };
             imgObjTextOutlineWithoutTexture = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos + new Vector2(38, 0)));
-
-            pos.Y += 40;
-            imgObjTextInlineWithoutTextureCheckbox = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos));
-            imgObjTextInlineWithoutTextureCheckbox.OnClick = () =>
-            {
-                strokeType = StrokeType.InlineWithoutTexture;
-                UpdateTextureOutlines();
-            };
-            imgObjTextInlineWithoutTexture = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos + new Vector2(38, 0)));
-
-            pos.Y += 40;
-            imgObjTextOutlineAndInlineWithoutTextureCheckbox = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos));
-            imgObjTextOutlineAndInlineWithoutTextureCheckbox.OnClick = () =>
-            {
-                strokeType = StrokeType.OutlineAndInlineWithoutTexture;
-                UpdateTextureOutlines();
-            };
-            imgObjTextOutlineAndInlineWithoutTexture = CreateAndAddImageObject(new Drawables.Image(imgPixel, pos + new Vector2(38, 0)));
 
             pos = new Vector2(600, 15);
 
@@ -205,6 +190,9 @@ namespace MonoGame.StrokeEffect_Samples
             CreateAndAddImageObject(new Drawables.Image(imgPixel, new Rectangle(15, 195, 1000, 2)))
                 .color = Color.Yellow;
 
+            CreateAndAddImageObject(new Drawables.Image(imgSurgeOriginal, new Vector2(850, 250)));
+            imgObjSurge = CreateAndAddImageObject(new Drawables.Image(imgPixel, new Vector2(900, 250)));
+
             var posY = 370;
 
             CreateAndAddImageObject(new Drawables.Image(imgHeartOriginal, new Vector2(50, posY)));
@@ -224,6 +212,8 @@ namespace MonoGame.StrokeEffect_Samples
 
             imgObjMultipleText = CreateAndAddImageObject(new Drawables.Image(imgPixel, new Vector2(25, 640)));
 
+            imgObjFpsText = CreateAndAddImageObject(new Drawables.Image(imgPixel, new Vector2(600, 660)));
+
             UpdateTextureOutlines();
         }
 
@@ -231,54 +221,94 @@ namespace MonoGame.StrokeEffect_Samples
         {
             imgObjTextOutlineWithTextureCheckbox.texture = strokeType == StrokeType.OutlineAndTexture ? imgCheckBoxChecked : imgCheckBox;
             imgObjTextOutlineWithoutTextureCheckbox.texture = strokeType == StrokeType.OutlineWithoutTexture ? imgCheckBoxChecked : imgCheckBox;
-            imgObjTextInlineWithoutTextureCheckbox.texture = strokeType == StrokeType.InlineWithoutTexture ? imgCheckBoxChecked : imgCheckBox;
-            imgObjTextOutlineAndInlineWithoutTextureCheckbox.texture = strokeType == StrokeType.OutlineAndInlineWithoutTexture ? imgCheckBoxChecked : imgCheckBox;
 
-            var textColor = Color.Red;
-            // TODO unloaad the previous textures
-            imgObjTextType.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Type:", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextOutlineWithTexture.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Outline", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextOutlineWithoutTexture.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Outline no texture", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextInlineWithoutTexture.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Inline no texture", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextOutlineAndInlineWithoutTexture.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Outline and Inline no texture", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
+            CreateStrokeSpriteFont(imgObjTextType, arialSpriteFont, "Type:");
+            CreateStrokeSpriteFont(imgObjTextOutlineWithTexture, arialSpriteFont, "Outline");
+            CreateStrokeSpriteFont(imgObjTextOutlineWithoutTexture, arialSpriteFont, "Outline no texture");
 
-            imgObjTextSize.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Size:", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextSizeNumber.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, strokeSize.ToString(), textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
+            CreateStrokeSpriteFont(imgObjTextSize, arialSpriteFont, "Size:");
+            CreateStrokeSpriteFont(imgObjTextSizeNumber, arialSpriteFont, strokeSize.ToString());
 
-            imgObjTextColor.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "Color:", textColor, Vector2.One, strokeSize, strokeColor, GraphicsDevice, strokeType);
+            CreateStrokeSpriteFont(imgObjTextColor, arialSpriteFont, "Color:");
 
 
-            imgObjTextSprintFontStroke.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "SPRITE FONT STROKE", textColor, new Vector2(1.5f), strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextSmall.texture = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "SPRITE FONT STROKE - SMALL TEXT", textColor, new Vector2(0.5f), strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjTextBigText.texture = StrokeEffect.CreateStrokeSpriteFont(cooperBlackSpriteFont, "Sprite font stroke - BIG TEXT", textColor, new Vector2(1.3f), strokeSize, strokeColor, GraphicsDevice, strokeType);
+            CreateStrokeSpriteFont(imgObjTextSprintFontStroke, arialSpriteFont, "SPRITE FONT STROKE", new Vector2(1.5f));
+            CreateStrokeSpriteFont(imgObjTextSmall, arialSpriteFont, "SPRITE FONT STROKE - SMALL TEXT", new Vector2(0.8f));
+            CreateStrokeSpriteFont(imgObjTextBigText, cooperBlackSpriteFont, "Sprite font stroke - BIG TEXT", new Vector2(1.3f));
 
-            imgObjCamera.texture = StrokeEffect.CreateStroke(imgCameraOriginal, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjGlobe.texture = StrokeEffect.CreateStroke(imgGlobeOriginal, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjHeart.texture = StrokeEffect.CreateStroke(imgHeartOriginal, strokeSize, strokeColor, GraphicsDevice, strokeType);
-            imgObjImagePlus.texture = StrokeEffect.CreateStroke(imgImagePlusOriginal, strokeSize, strokeColor, GraphicsDevice, strokeType);
+            CreateStroke(imgObjCamera, imgCameraOriginal);
+            CreateStroke(imgObjGlobe, imgGlobeOriginal);
+            CreateStroke(imgObjSurge, imgSurgeOriginal);
+            CreateStroke(imgObjHeart, imgHeartOriginal);
+            CreateStroke(imgObjImagePlus, imgImagePlusOriginal);
 
-            var imgTextMultipleBorders = StrokeEffect.CreateStrokeSpriteFont(cooperBlackSpriteFont, "Multiple Borders", Color.White, new Vector2(1.5f), strokeSize, Color.Black, GraphicsDevice);
-            imgTextMultipleBorders = StrokeEffect.CreateStroke(imgTextMultipleBorders, strokeSize, Color.Orange, GraphicsDevice);
-            imgTextMultipleBorders = StrokeEffect.CreateStroke(imgTextMultipleBorders, strokeSize, Color.Red, GraphicsDevice);
-            imgTextMultipleBorders = StrokeEffect.CreateStroke(imgTextMultipleBorders, strokeSize, Color.Yellow, GraphicsDevice);
-            imgTextMultipleBorders = StrokeEffect.CreateStroke(imgTextMultipleBorders, strokeSize, Color.Black, GraphicsDevice);
-            imgObjMultipleText.texture = imgTextMultipleBorders;
+            CreateStrokeSpriteFont(imgObjMultipleText, cooperBlackSpriteFont, "Multiple Borders", new Vector2(1.5f), Color.White);
+            CreateStroke(imgObjMultipleText, imgObjMultipleText.texture, Color.Orange);
+            CreateStroke(imgObjMultipleText, imgObjMultipleText.texture, Color.Red);
+            CreateStroke(imgObjMultipleText, imgObjMultipleText.texture, Color.Yellow);
+            CreateStroke(imgObjMultipleText, imgObjMultipleText.texture, Color.Black);
+
+            UpdateFpsTexture();
         }
 
+        private void CreateStroke(Drawables.Image image, Texture2D texture, Color? imageStrokeColor = null)
+        {
+            var imageStroke = StrokeEffect.CreateStroke(texture, strokeSize, imageStrokeColor == null ? strokeColor : imageStrokeColor.Value, GraphicsDevice, Content, strokeType);
+
+            // Dispose if the previous texture is not pixel
+            if (image.texture != imgPixel)
+                image.texture.Dispose();
+
+            image.texture = imageStroke;
+        }
+
+        private void CreateStrokeSpriteFont(Drawables.Image image, SpriteFont spriteFont, string text, Vector2? scale = null, Color? textStrokeColor = null, Color? textColor = null)
+        {
+            var textStroke = StrokeEffect.CreateStrokeSpriteFont(spriteFont, text, textColor == null ? Color.Black : textColor.Value, scale ?? Vector2.One, strokeSize, textStrokeColor == null ? strokeColor : textStrokeColor.Value, GraphicsDevice, Content, strokeType);
+
+            // Dispose if the previous texture is not pixel
+            if (image.texture != imgPixel)
+                image.texture.Dispose();
+
+            image.texture = textStroke;
+        }
+
+        private void UpdateFpsTexture()
+        {
+            CreateStrokeSpriteFont(imgObjFpsText, cooperBlackSpriteFont, $"FPS: {lastFpsCount}", new Vector2(0.85f), null, Color.Blue);
+        }
+
+        private bool clicked = false;
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            fpsCount++;
+            fpsTimeSpan = fpsTimeSpan.Add(gameTime.ElapsedGameTime);
+            if (fpsTimeSpan >= new TimeSpan(0, 0, 1))
+            {
+                lastFpsCount = fpsCount;
+                fpsTimeSpan = new TimeSpan(0, 0, 0, 0, fpsTimeSpan.Milliseconds);
+                fpsCount = 0;
+                UpdateFpsTexture();
+            }
+
             var mouse = Mouse.GetState();
 
             if (mouse.LeftButton == ButtonState.Pressed)
             {
-                var pos = new Vector2(mouse.X, mouse.Y);
+                if (!clicked)
+                {
+                    clicked = true;
+                    var pos = new Vector2(mouse.X, mouse.Y);
 
-                var imgObj = drawList.FirstOrDefault(item => item.Collision(pos));
-                imgObj?.OnClick?.Invoke();
+                    var imgObj = drawList.FirstOrDefault(item => item.Collision(pos));
+                    imgObj?.OnClick?.Invoke();
+                }
             }
+            else
+                clicked = false;
 
             base.Update(gameTime);
         }

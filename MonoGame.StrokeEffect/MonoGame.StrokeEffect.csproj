@@ -5,20 +5,30 @@
     <Authors>Danilo Peres</Authors>
     <Company>Danilo Peres</Company>
     <Description>MonoGame.StrokeEffect is a library to generate strokes for Texture2D in MonoGame.
-We also support Sprite Font.</Description>
-    <Copyright>Copyright 2020 Danilo Peres</Copyright>
+We also support Sprite Font.
+We use a shader effect to process the outline</Description>
+    <Copyright>Copyright 2021 Danilo Peres</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageProjectUrl></PackageProjectUrl>
-    <PackageIcon>MonoGaame.StrokeEffect_Logo_256.png</PackageIcon>
+    <PackageIcon>MonoGame.StrokeEffect_Logo_256.png</PackageIcon>
     <RepositoryUrl>https://github.com/DaniloPeres/MySqlHelper</RepositoryUrl>
     <PackageTags>MonoGame stroke effect, Monogame stroke, Monogame border, Monogame outline</PackageTags>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MonoGaame.StrokeEffect_Logo_256.png" />
-    <None Remove="MonoGaame.StrokeEffect_Logo_256.png" />
-    <None Include="MonoGaame.StrokeEffect_Logo_256.png">
+    <Compile Remove="Content\obj\**" />
+    <EmbeddedResource Remove="Content\obj\**" />
+    <None Remove="Content\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Content\RebuildEffects.bat" />
+    <None Remove="Content\StrokeEffect.fx" />
+    <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
+    <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
+    <None Include="MonoGame.StrokeEffect_Logo_256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
@@ -29,4 +39,20 @@ We also support Sprite Font.</Description>
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Content\DirectX\StrokeEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\OpenGL\StrokeEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

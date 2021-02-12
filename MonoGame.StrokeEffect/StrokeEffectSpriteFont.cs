@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ namespace MonoGame
 {
     public static partial class StrokeEffect
     {
-        public static Texture2D CreateStrokeSpriteFont(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, int strokeSize, Color strokeColor, GraphicsDevice graphics, StrokeType strokeType = StrokeType.OutlineAndTexture)
+        public static Texture2D CreateStrokeSpriteFont(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, int strokeSize, Color strokeColor, GraphicsDevice graphics, ContentManager content, StrokeType strokeType = StrokeType.OutlineAndTexture)
         {
             var textTexture2D = DrawSpriteFontToTexture2D(spriteFont, text, textColor, scale, graphics);
-            return CreateStroke(textTexture2D, strokeSize, strokeColor, graphics, strokeType);
+            return CreateStroke(textTexture2D, strokeSize, strokeColor, graphics, content, strokeType);
         }
 
         private static Texture2D DrawSpriteFontToTexture2D(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, GraphicsDevice graphics)

@@ -9,3 +9,10 @@
 /MonoGame.StrokeEffect-Samples/obj
 /MonoGame.StrokeEffect-Samples/Content/bin
 /MonoGame.StrokeEffect-Samples/Content/obj
+/MonoGame.StrokeEffect/Content/bin
+/MonoGame.StrokeEffect/Content/obj
+/MonoGame.StrokeEffect/Content/.mgcontent
+/MonoGame.StrokeEffect/Content/.mgstats
+/MonoGame.StrokeEffect/Content/StrokeEffect.mgcontent
+/MonoGame.StrokeEffect/MonoGame.StrokeEffect.csproj.user
+/MonoGame.StrokeEffect-Samples/MonoGame.StrokeEffect-Samples.csproj.user

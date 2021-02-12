@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.StrokeEffect", "MonoGame.StrokeEffect\MonoGame.StrokeEffect.csproj", "{7F752D2D-912C-4979-A9CA-C234F7763756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.StrokeEffect-Samples", "MonoGame.StrokeEffect-Samples\MonoGame.StrokeEffect-Samples.csproj", "{C9B483F0-E525-43C8-93AE-C634F0FAFF40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.StrokeEffect-Samples", "MonoGame.StrokeEffect-Samples\MonoGame.StrokeEffect-Samples.csproj", "{FFE890F9-17D4-4252-9740-601F3F262C5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,26 +35,26 @@ Global
 		{7F752D2D-912C-4979-A9CA-C234F7763756}.Release|x64.Build.0 = Release|Any CPU
 		{7F752D2D-912C-4979-A9CA-C234F7763756}.Release|x86.ActiveCfg = Release|Any CPU
 		{7F752D2D-912C-4979-A9CA-C234F7763756}.Release|x86.Build.0 = Release|Any CPU
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|ARM.ActiveCfg = Debug|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|ARM.Build.0 = Debug|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|ARM.Deploy.0 = Debug|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x64.ActiveCfg = Debug|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x64.Build.0 = Debug|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x64.Deploy.0 = Debug|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x86.ActiveCfg = Debug|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x86.Build.0 = Debug|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Debug|x86.Deploy.0 = Debug|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|Any CPU.ActiveCfg = Release|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|ARM.ActiveCfg = Release|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|ARM.Build.0 = Release|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|ARM.Deploy.0 = Release|ARM
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x64.ActiveCfg = Release|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x64.Build.0 = Release|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x64.Deploy.0 = Release|x64
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x86.ActiveCfg = Release|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x86.Build.0 = Release|x86
-		{C9B483F0-E525-43C8-93AE-C634F0FAFF40}.Release|x86.Deploy.0 = Release|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|ARM.Build.0 = Debug|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|ARM.Deploy.0 = Debug|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x64.ActiveCfg = Debug|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x64.Build.0 = Debug|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x64.Deploy.0 = Debug|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x86.ActiveCfg = Debug|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x86.Build.0 = Debug|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Debug|x86.Deploy.0 = Debug|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|Any CPU.ActiveCfg = Release|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|ARM.ActiveCfg = Release|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|ARM.Build.0 = Release|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|ARM.Deploy.0 = Release|ARM
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x64.ActiveCfg = Release|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x64.Build.0 = Release|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x64.Deploy.0 = Release|x64
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.ActiveCfg = Release|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.Build.0 = Release|x86
+		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
