@@ -4,6 +4,7 @@
 
 # MonoGame.StrokeEffect
 <b>MonoGame.StrokeEffect</b> is a library to generate strokes for Texture2D in MonoGame. We also support Sprite Font.
+We use a shader effect to generate the Stroke effect.
 
 ## Nuget package
 There is a nuget package avaliable here https://www.nuget.org/packages/MonoGame.StrokeEffect/.
@@ -24,8 +25,6 @@ https://github.com/DaniloPeres/MonoGame.StrokeEffect/tree/main/MonoGame.StrokeEf
 
 - 'OutlineAndTexture' - Create a new Texture with the original Texture and an outline stroke
 - 'OutlineWithoutTexture' - Create a new Texture with only the outline stroke
-- 'InlineWithoutTexture' - Create a new Texture with only the inline stroke
-- 'OutlineAndInlineWithoutTexture' - Create a new Texture with outline and inline strokes (Without original texture)
 
 ## Create a new Texture with stroke
 
@@ -33,7 +32,7 @@ https://github.com/DaniloPeres/MonoGame.StrokeEffect/tree/main/MonoGame.StrokeEf
 int strokeSize = 3;
 Color strokeColor = Color.Black;
 StrokeType strokeType = StrokeType.OutlineAndTexture;
-var textureWithStroke = StrokeEffect.CreateStroke(myTexture, strokeSize, strokeColor, GraphicsDevice, strokeType);
+var textureWithStroke = StrokeEffect.CreateStroke(myTexture, strokeSize, strokeColor, GraphicsDevice, Content, strokeType);
 ```
 
 ## 
@@ -44,7 +43,7 @@ Vector2 scale = Vector2.One;
 int strokeSize = 3;
 Color strokeColor = Color.Black;
 StrokeType strokeType = StrokeType.OutlineAndTexture;
-var textStroke = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "My Text", textColor, scale, strokeSize, strokeColor, GraphicsDevice, strokeType);
+var textStroke = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "My Text", textColor, scale, strokeSize, strokeColor, GraphicsDevice, Content, strokeType);
 ```
 
 ## License
