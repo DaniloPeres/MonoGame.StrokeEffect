@@ -146,11 +146,12 @@ namespace MonoGame.StrokeEffect_Samples
                 };
 
             pos = new Vector2(600, 80);
+
             imgObjTextColor = new Drawables.Image(imgPixel, pos);
             drawList.Add(imgObjTextColor);
 
             var posLeftColor = pos.X + 100;
-            pos.X = posLeftColor;
+            pos = new Vector2(posLeftColor, pos.Y);
             CreateSquareColor(pos, Color.White, true);
             pos.X += 45;
             CreateSquareColor(pos, Color.Yellow);
@@ -253,7 +254,7 @@ namespace MonoGame.StrokeEffect_Samples
 
         private void CreateStroke(Drawables.Image image, Texture2D texture, Color? imageStrokeColor = null)
         {
-            var imageStroke = StrokeEffect.CreateStroke(texture, strokeSize, imageStrokeColor == null ? strokeColor : imageStrokeColor.Value, GraphicsDevice, Content, strokeType);
+            var imageStroke = StrokeEffect.CreateStroke(texture, strokeSize, imageStrokeColor == null ? strokeColor : imageStrokeColor.Value, GraphicsDevice, strokeType);
 
             // Dispose if the previous texture is not pixel
             if (image.texture != imgPixel)
@@ -264,7 +265,7 @@ namespace MonoGame.StrokeEffect_Samples
 
         private void CreateStrokeSpriteFont(Drawables.Image image, SpriteFont spriteFont, string text, Vector2? scale = null, Color? textStrokeColor = null, Color? textColor = null)
         {
-            var textStroke = StrokeEffect.CreateStrokeSpriteFont(spriteFont, text, textColor == null ? Color.Black : textColor.Value, scale ?? Vector2.One, strokeSize, textStrokeColor == null ? strokeColor : textStrokeColor.Value, GraphicsDevice, Content, strokeType);
+            var textStroke = StrokeEffect.CreateStrokeSpriteFont(spriteFont, text, textColor == null ? Color.Black : textColor.Value, scale ?? Vector2.One, strokeSize, textStrokeColor == null ? strokeColor : textStrokeColor.Value, GraphicsDevice, strokeType);
 
             // Dispose if the previous texture is not pixel
             if (image.texture != imgPixel)

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -14,7 +14,7 @@ We use a shader effect to process the outline</Description>
     <PackageIcon>MonoGame.StrokeEffect_Logo_256.png</PackageIcon>
     <RepositoryUrl>https://github.com/DaniloPeres/MySqlHelper</RepositoryUrl>
     <PackageTags>MonoGame stroke effect, Monogame stroke, Monogame border, Monogame outline</PackageTags>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,10 +24,18 @@ We use a shader effect to process the outline</Description>
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Content\DirectX\StrokeEffect.xnb" />
+    <None Remove="Content\OpenGL\StrokeEffect.xnb" />
     <None Remove="Content\RebuildEffects.bat" />
     <None Remove="Content\StrokeEffect.fx" />
     <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
     <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
+    <EmbeddedResource Include="Content\DirectX\StrokeEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Content\OpenGL\StrokeEffect.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="MonoGame.StrokeEffect_Logo_256.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -41,18 +49,5 @@ We use a shader effect to process the outline</Description>
 
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Content\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Content\DirectX\StrokeEffect.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Content\OpenGL\StrokeEffect.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

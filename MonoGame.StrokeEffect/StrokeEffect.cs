@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 
 namespace MonoGame
@@ -19,9 +17,9 @@ namespace MonoGame
         private static Effect strokeEffectCache;
         private static string CurrentShaderExtension => GetShaderExtension() == GraphicsApi.OPEN_GL ? "OpenGL" : "DirectX";
 
-        public static Texture2D CreateStroke(Texture2D src, int size, Color color, GraphicsDevice graphics, ContentManager content, StrokeType strokeType = StrokeType.OutlineAndTexture)
+        public static Texture2D CreateStroke(Texture2D src, int size, Color color, GraphicsDevice graphics, StrokeType strokeType = StrokeType.OutlineAndTexture)
         {
-            var effect = GetEffectStroke(content);
+            var effect = GetEffectStroke(graphics);
 
             // crate a render target with margins
             using (var renderTargetResize = new RenderTarget2D(graphics, src.Width + size * 2, src.Height + size * 2))
@@ -64,10 +62,25 @@ namespace MonoGame
             }
         }
 
-        private static Effect GetEffectStroke(ContentManager content)
+        private static Effect GetEffectStroke(GraphicsDevice graphics)
         {
             if (strokeEffectCache == null)
-                strokeEffectCache = content.Load<Effect>($"{CurrentShaderExtension}/StrokeEffect");
+            {
+
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = $"MonoGame.StrokeEffect.Content.{CurrentShaderExtension}.StrokeEffect.xnb";
+
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        stream.CopyTo(ms);
+                        var content = new XnbContentManager(ms, graphics);
+                        strokeEffectCache = content.Load<Effect>("MyMemoryStreamAsset");
+                    }
+                }
+            }
+
             return strokeEffectCache;
         }
 

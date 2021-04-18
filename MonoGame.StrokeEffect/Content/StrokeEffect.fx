@@ -27,12 +27,6 @@ struct VertexShaderOutput
 	float2 TextureCoordinates : TEXCOORD0;
 };
 
-struct PixelCheckerInfo
-{
-	float2 Position;
-	float4 Color;
-};
-
 float OverlapColorParameter(float baseColor, float addColor, float addAlpha)
 {
 	float baseAlphaPercetage = 1 - addAlpha;
@@ -68,21 +62,33 @@ float GetDistanceBetween2Points(float2 pos1, float2 pos2)
 	return pow(distX, 2) + pow(distY, 2);
 }
 
-PixelCheckerInfo getHighestAlphaPixel(PixelCheckerInfo highestPixelInfoAlpha, float2 pos, float2 originalPos)
+bool isPos1Closer(float2 pos1, float2 pos2, float2 posCompare)
+{
+	float distPos1 = abs(posCompare.x - pos1.x) + abs(posCompare.y - pos1.y);
+	float distPos2 = abs(posCompare.x - pos2.x) + abs(posCompare.y - pos2.y);
+	return distPos1 <= distPos2;
+}
+
+float getHighestAlphaPixel(float highestPixelAlpha, float2 pos, float2 originalPos)
 {
 	float4 color = tex2D(InputSampler, pos);
 
-	if (highestPixelInfoAlpha.Color.a > color.a)
-		return highestPixelInfoAlpha;
+	return highestPixelAlpha > color.a
+		? highestPixelAlpha
+		: color.a;
+}
+
+float2 getClosestPixelWithColor(float2 closestPixel, float2 pos, float2 originalPos)
+{
+	float4 color = tex2D(InputSampler, pos);
+	if (color.a == 0)
+		return closestPixel;
+	if (closestPixel.x == -1)
+		return pos;
 	
-	// in case the same alpha, get the closest pixel
-	if (highestPixelInfoAlpha.Color.a == color.a && abs(GetDistanceBetween2Points(highestPixelInfoAlpha.Position, originalPos)) <= abs(GetDistanceBetween2Points(pos, originalPos)))
-		return highestPixelInfoAlpha;
-	
-	PixelCheckerInfo newPixelInfo;
-	newPixelInfo.Color = color;
-	newPixelInfo.Position = pos;
-	return newPixelInfo;
+	float2 uvPix = float2(1, 1) / textureSize;
+
+	return isPos1Closer(closestPixel / uvPix, pos / uvPix, originalPos / uvPix) ? closestPixel : pos;
 }
 
 float CalculateDistancePixelFromCenter(float2 positionOrigin, float2 positionDestination, float radius)
@@ -97,11 +103,11 @@ float CalculatePixelAlpha(float2 positionOrigin, float2 positionDestination, flo
     // Get the fartest pixel possible to be the max points to calculate the other points in circular
 	float maxPointsCenter = CalculateDistancePixelFromCenter(positionOrigin, positionOrigin + float2(outlineWidth, 0), outlineWidth + 1);
 
-	float radius = outlineWidth + alphaCenterPoint;
+	float radius = outlineWidth + 1;
 	float pointsCenter = CalculateDistancePixelFromCenter(positionOrigin, positionDestination, radius);
 	float alpha = pointsCenter / maxPointsCenter;
 
-	if (alpha <= 1)
+	if (alpha <= 1.0001)
 	 	alpha *= alphaCenterPoint;
 
 	return max(min(1, alpha), 0);
@@ -121,43 +127,61 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 		return col;
 	}
 
-	PixelCheckerInfo highestPixelInfoAlpha;
-	highestPixelInfoAlpha.Color = float4(0, 0, 0, 0);
-	highestPixelInfoAlpha.Position = float2(0, 0);
-
-	int MAX_OUTLINE_WIDTH = 7;
+	float highestPixelAlpha = 0;
+	float2 closestPixel = float2(-1, -1);
 
     // Check first horizontal and vertical pixels
+#if OPENGL
+    int MAX_OUTLINE_WIDTH = 7;
     [unroll(MAX_OUTLINE_WIDTH)]
+#else
+    [loop]
+#endif
 	for (int i = 1; i <= outlineWidth; i++)
 	{
-		highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(i, 0) * uvPix, pos);
-		highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(-i, 0) * uvPix, pos);
-		highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(0, i) * uvPix, pos);
-		highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(0, -i) * uvPix, pos);
+		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(i, 0) * uvPix, pos);
+		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-i, 0) * uvPix, pos);
+		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, i) * uvPix, pos);
+		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, -i) * uvPix, pos);
+		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(i, 0) * uvPix, pos);
+		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-i, 0) * uvPix, pos);
+		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, i) * uvPix, pos);
+		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, -i) * uvPix, pos);
 	}
 
+#if OPENGL
 	[unroll(MAX_OUTLINE_WIDTH)]
+#else
+    [loop]
+#endif
 	for (int x = 1; x <= outlineWidth; x++)
 	{
+#if OPENGL
 		[unroll(MAX_OUTLINE_WIDTH)]
+#else
+		[loop]
+#endif
 		for (int y = 1; y <= outlineWidth; y++)
 		{
-			highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(x, y) * uvPix, pos);
-			highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(-x, y) * uvPix, pos);
-			highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(x, -y) * uvPix, pos);
-			highestPixelInfoAlpha = getHighestAlphaPixel(highestPixelInfoAlpha, pos + float2(-x, -y) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, y) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, y) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, -y) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, -y) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, y) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, y) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, -y) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, -y) * uvPix, pos);
 		}
 	}
   
-	if (highestPixelInfoAlpha.Color.a == 0)
+    if (highestPixelAlpha == 0 || closestPixel.x == -1)
 		return col;
 
-    // Calculate the Alpha by the distance between the stroke pixel to the highestAlphaPixel
-    // float maxPointsCenter = 0.001f; //CalculateDistancePixelFromCenter(pos, pos, (outlineWidth + 1) * uvPix.x);
-	float alpha = CalculatePixelAlpha(pos / uvPix, highestPixelInfoAlpha.Position / uvPix, highestPixelInfoAlpha.Color.a);
+    // Calculate the Alpha by the distance between the stroke pixel to the closest pixel (no transparency) using the highest transparency found
+	float alpha = CalculatePixelAlpha(pos / uvPix, closestPixel / uvPix, highestPixelAlpha);
 
 	float4 outlineCalc = outlineColor * alpha;
+
 	if (col.a == 0 || typeId == 1)
 		return outlineCalc;
     
