@@ -11,8 +11,10 @@ namespace MonoGame
     {
         public static Texture2D CreateStrokeSpriteFont(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, int strokeSize, Color strokeColor, GraphicsDevice graphics, StrokeType strokeType = StrokeType.OutlineAndTexture)
         {
-            var textTexture2D = DrawSpriteFontToTexture2D(spriteFont, text, textColor, scale, graphics);
-            return CreateStroke(textTexture2D, strokeSize, strokeColor, graphics, strokeType);
+            using (var textTexture2D = DrawSpriteFontToTexture2D(spriteFont, text, textColor, scale, graphics))
+            {
+                return CreateStroke(textTexture2D, strokeSize, strokeColor, graphics, strokeType);
+            }
         }
 
         private static Texture2D DrawSpriteFontToTexture2D(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, GraphicsDevice graphics)
