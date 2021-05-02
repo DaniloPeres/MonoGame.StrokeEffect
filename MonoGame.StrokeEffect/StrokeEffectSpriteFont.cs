@@ -19,12 +19,13 @@ namespace MonoGame
 
         private static Texture2D DrawSpriteFontToTexture2D(SpriteFont spriteFont, string text, Color textColor, Vector2 scale, GraphicsDevice graphics)
         {
-            var textSize = spriteFont.MeasureString(text) * scale;
-            var target = new RenderTarget2D(graphics, (int)textSize.X, (int)textSize.Y);
-            using (var spriteBatch = new SpriteBatch(graphics))
+            lock (graphics)
             {
+                var textSize = spriteFont.MeasureString(text) * scale;
+                var target = new RenderTarget2D(graphics, (int)textSize.X, (int)textSize.Y);
                 graphics.SetRenderTarget(target);// Now the spriteBatch will render to the RenderTarget2D
                 graphics.Clear(Color.Transparent);
+                var spriteBatch = GetSpriteBatch(graphics);
                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
                 spriteBatch.DrawString(spriteFont, text, Vector2.Zero, textColor, 0f, Vector2.Zero, scale, SpriteEffects.None, 1);
                 spriteBatch.End();
