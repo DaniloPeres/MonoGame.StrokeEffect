@@ -132,45 +132,43 @@ float4 MainPS(VertexShaderOutput input) : COLOR
 
     // Check first horizontal and vertical pixels
 #if OPENGL
-    int MAX_OUTLINE_WIDTH = 7;
-    [unroll(MAX_OUTLINE_WIDTH)]
+	const static int MAX_LOOP = 7;
 #else
-    [loop]
+	int MAX_LOOP = outlineWidth;
 #endif
-	for (int i = 1; i <= outlineWidth; i++)
+    [loop]
+	for (int i = 1; i <= MAX_LOOP; i++)
 	{
-		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(i, 0) * uvPix, pos);
-		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-i, 0) * uvPix, pos);
-		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, i) * uvPix, pos);
-		highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, -i) * uvPix, pos);
-		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(i, 0) * uvPix, pos);
-		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-i, 0) * uvPix, pos);
-		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, i) * uvPix, pos);
-		closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, -i) * uvPix, pos);
+		if (i <= outlineWidth) {
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(i, 0) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-i, 0) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, i) * uvPix, pos);
+			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(0, -i) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(i, 0) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-i, 0) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, i) * uvPix, pos);
+			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(0, -i) * uvPix, pos);
+		}
 	}
 
-#if OPENGL
-	[unroll(MAX_OUTLINE_WIDTH)]
-#else
     [loop]
-#endif
-	for (int x = 1; x <= outlineWidth; x++)
-	{
-#if OPENGL
-		[unroll(MAX_OUTLINE_WIDTH)]
-#else
-		[loop]
-#endif
-		for (int y = 1; y <= outlineWidth; y++)
-		{
-			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, y) * uvPix, pos);
-			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, y) * uvPix, pos);
-			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, -y) * uvPix, pos);
-			highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, -y) * uvPix, pos);
-			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, y) * uvPix, pos);
-			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, y) * uvPix, pos);
-			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, -y) * uvPix, pos);
-			closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, -y) * uvPix, pos);
+	for (int x = 1; x <= MAX_LOOP; x++)
+	{ 
+		if (x <= outlineWidth) {
+			[loop]
+			for (int y = 1; y <= MAX_LOOP; y++)
+			{
+				if (y <= outlineWidth) {
+					highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, y) * uvPix, pos);
+					highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, y) * uvPix, pos);
+					highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(x, -y) * uvPix, pos);
+					highestPixelAlpha = getHighestAlphaPixel(highestPixelAlpha, pos + float2(-x, -y) * uvPix, pos);
+					closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, y) * uvPix, pos);
+					closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, y) * uvPix, pos);
+					closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(x, -y) * uvPix, pos);
+					closestPixel = getClosestPixelWithColor(closestPixel, pos + float2(-x, -y) * uvPix, pos);
+				}
+			}
 		}
 	}
   

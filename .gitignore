@@ -16,3 +16,7 @@
 /MonoGame.StrokeEffect/Content/StrokeEffect.mgcontent
 /MonoGame.StrokeEffect/MonoGame.StrokeEffect.csproj.user
 /MonoGame.StrokeEffect-Samples/MonoGame.StrokeEffect-Samples.csproj.user
+/MonoGame.StrokeEffect-Samples.Android/bin
+/MonoGame.StrokeEffect-Samples.Android/obj
+/MonoGame.StrokeEffect-Samples.Shared/Content/bin
+/MonoGame.StrokeEffect-Samples.Shared/Content/obj

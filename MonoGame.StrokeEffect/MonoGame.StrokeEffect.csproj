@@ -18,12 +18,6 @@ We use a shader effect to process the outline</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Content\obj\**" />
-    <EmbeddedResource Remove="Content\obj\**" />
-    <None Remove="Content\obj\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Content\DirectX\StrokeEffect.xnb" />
     <None Remove="Content\OpenGL\StrokeEffect.xnb" />
     <None Remove="Content\RebuildEffects.bat" />
@@ -34,7 +28,7 @@ We use a shader effect to process the outline</Description>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Content\OpenGL\StrokeEffect.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="MonoGame.StrokeEffect_Logo_256.png">
       <Pack>True</Pack>

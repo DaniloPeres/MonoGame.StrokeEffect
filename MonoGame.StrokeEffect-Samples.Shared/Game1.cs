@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -295,14 +296,28 @@ namespace MonoGame.StrokeEffect_Samples
                 UpdateFpsTexture();
             }
 
-            var mouse = Mouse.GetState();
+            bool isActionPressed;
+            Vector2 actionPos;
 
-            if (mouse.LeftButton == ButtonState.Pressed)
+            var touchesInput = TouchPanel.GetState().ToList();
+            if (touchesInput.Any())
+            {
+                var touchInput = touchesInput.First();
+                isActionPressed = touchInput.State == TouchLocationState.Pressed;
+                actionPos = touchInput.Position;
+            } else
+            {
+                var mouseState = Mouse.GetState();
+                isActionPressed = mouseState.LeftButton == ButtonState.Pressed;
+                actionPos = mouseState.Position.ToVector2();
+            }
+
+            if (isActionPressed)
             {
                 if (!clicked)
                 {
                     clicked = true;
-                    var pos = new Vector2(mouse.X, mouse.Y);
+                    var pos = new Vector2(actionPos.X, actionPos.Y);
 
                     var imgObj = drawList.FirstOrDefault(item => item.Collision(pos));
                     imgObj?.OnClick?.Invoke();

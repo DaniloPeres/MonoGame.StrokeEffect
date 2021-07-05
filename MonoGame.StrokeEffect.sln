@@ -5,9 +5,18 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonoGame.StrokeEffect", "MonoGame.StrokeEffect\MonoGame.StrokeEffect.csproj", "{7F752D2D-912C-4979-A9CA-C234F7763756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.StrokeEffect-Samples", "MonoGame.StrokeEffect-Samples\MonoGame.StrokeEffect-Samples.csproj", "{FFE890F9-17D4-4252-9740-601F3F262C5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.StrokeEffect-Samples.UWP", "MonoGame.StrokeEffect-Samples\MonoGame.StrokeEffect-Samples.UWP.csproj", "{FFE890F9-17D4-4252-9740-601F3F262C5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGame.StrokeEffect-Samples.Android", "MonoGame.StrokeEffect-Samples.Android\MonoGame.StrokeEffect-Samples.Android.csproj", "{09C0733E-267C-4B03-BFEA-B3E16133DA39}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MonoGame.StrokeEffect-Samples.Shared", "MonoGame.StrokeEffect-Samples.Shared\MonoGame.StrokeEffect-Samples.Shared.shproj", "{6F65D2FF-CC39-426F-8740-23E170A13068}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MonoGame.StrokeEffect-Samples.Shared\MonoGame.StrokeEffect-Samples.Shared.projitems*{09c0733e-267c-4b03-bfea-b3e16133da39}*SharedItemsImports = 4
+		MonoGame.StrokeEffect-Samples.Shared\MonoGame.StrokeEffect-Samples.Shared.projitems*{6f65d2ff-cc39-426f-8740-23e170a13068}*SharedItemsImports = 13
+		MonoGame.StrokeEffect-Samples.Shared\MonoGame.StrokeEffect-Samples.Shared.projitems*{ffe890f9-17d4-4252-9740-601f3f262c5e}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
@@ -55,6 +64,30 @@ Global
 		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.ActiveCfg = Release|x86
 		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.Build.0 = Release|x86
 		{FFE890F9-17D4-4252-9740-601F3F262C5E}.Release|x86.Deploy.0 = Release|x86
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|ARM.Build.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|ARM.Deploy.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x64.Build.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x86.Build.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|ARM.ActiveCfg = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|ARM.Build.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|ARM.Deploy.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x64.ActiveCfg = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x64.Build.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x64.Deploy.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x86.ActiveCfg = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x86.Build.0 = Release|Any CPU
+		{09C0733E-267C-4B03-BFEA-B3E16133DA39}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
