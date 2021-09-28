@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using System.Reflection;
+using Xamarin.Essentials;
 
 namespace MonoGame
 {
@@ -20,6 +21,11 @@ namespace MonoGame
 
         public static Texture2D CreateStroke(Texture2D src, int size, Color color, GraphicsDevice graphics, StrokeType strokeType = StrokeType.OutlineAndTexture)
         {
+#if ANDROID
+            if (!MainThread.IsMainThread)
+                throw new Exception("To create a stroke effect, it must be running in the main thread");
+#endif
+
             lock (graphics)
             {
                 var effect = GetEffectStroke(graphics);
