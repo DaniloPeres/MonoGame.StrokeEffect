@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace MonoGame;
 
-namespace MonoGame
+public enum StrokeType
 {
-    public enum StrokeType
-    {
-        OutlineAndTexture,
-        OutlineWithoutTexture
-    }
+    OutlineAndTexture,
+    OutlineWithoutTexture
 }

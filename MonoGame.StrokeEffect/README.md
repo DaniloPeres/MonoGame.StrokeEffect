@@ -1,23 +1,6 @@
-<p align="center">
-  <img src="http://daniloperes.com/MonoGame.StrokeEffect_Logo_256.png" alt="MonoGame.StrokeEffect" width="120" height="120">
-</p>
-
 # MonoGame.StrokeEffect
-<b>MonoGame.StrokeEffect</b> is a library to generate strokes for Texture2D in MonoGame. We also support Sprite Font.
+MonoGame.StrokeEffect is a library to generate strokes for Texture2D in MonoGame. We also support Sprite Font.
 We use a shader effect to generate the Stroke effect.
-
-## Nuget package
-There is a nuget package avaliable here https://www.nuget.org/packages/MonoGame.StrokeEffect/.
-
-# Examples
-
-<img src="http://daniloperes.com/MonoGame.StrokeEffect.Sample.gif?1" alt="MonoGame.StrokeEffect" width="600" height="469">
-
-https://github.com/DaniloPeres/MonoGame.StrokeEffect/tree/main/MonoGame.StrokeEffect-Samples
-
-## Anti-Aliasing
-
-<img src="http://daniloperes.com/MonoGame.StrokeEffect.Anti-Aliasing.png?1" alt="MonoGame.StrokeEffect" width="450" height="170">
 
 # How to use
 

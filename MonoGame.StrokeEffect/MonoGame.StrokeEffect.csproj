@@ -1,48 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Danilo Peres</Authors>
-    <Company>Danilo Peres</Company>
-    <Description>MonoGame.StrokeEffect is a library to generate strokes for Texture2D in MonoGame.
-We also support Sprite Font.
-We use a shader effect to process the outline</Description>
-    <Copyright>Copyright 2021 Danilo Peres</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageLicenseFile></PackageLicenseFile>
-    <PackageProjectUrl></PackageProjectUrl>
-    <PackageIcon>MonoGame.StrokeEffect_Logo_256.png</PackageIcon>
-    <RepositoryUrl>https://github.com/DaniloPeres/MySqlHelper</RepositoryUrl>
-    <PackageTags>MonoGame stroke effect, Monogame stroke, Monogame border, Monogame outline</PackageTags>
-    <Version>1.0.7</Version>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Content\DirectX\StrokeEffect.xnb" />
-    <None Remove="Content\OpenGL\StrokeEffect.xnb" />
-    <None Remove="Content\RebuildEffects.bat" />
-    <None Remove="Content\StrokeEffect.fx" />
-    <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
-    <None Remove="MonoGame.StrokeEffect_Logo_256.png" />
-    <EmbeddedResource Include="Content\DirectX\StrokeEffect.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\OpenGL\StrokeEffect.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="MonoGame.StrokeEffect_Logo_256.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.Portable" Version="3.7.1.189" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Authors>Danilo Peres</Authors>
+		<Company>Danilo Peres</Company>
+		<Description>
+			MonoGame.StrokeEffect is a library to generate strokes for Texture2D in MonoGame.
+			We also support Sprite Font.
+			We use a shader effect to process the outline
+		</Description>
+		<Copyright>Copyright 2024 Danilo Peres</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageLicenseFile></PackageLicenseFile>
+		<PackageProjectUrl></PackageProjectUrl>
+		<PackageIcon>MonoGame.StrokeEffect_Logo_256.png</PackageIcon>
+		<RepositoryUrl>https://github.com/DaniloPeres/MonoGame.StrokeEffect</RepositoryUrl>
+		<PackageTags>MonoGame stroke effect, Monogame stroke, Monogame border, Monogame outline</PackageTags>
+		<Version>1.0.9</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="MonoGame.StrokeEffect_Logo_256.png" />
+		<None Include="README.md" Pack="true" PackagePath="\" />
+		<None Include="MonoGame.StrokeEffect_Logo_256.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.2.1105" />
+		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105">
+			<PrivateAssets>All</PrivateAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<MonoGameContentReference Remove="Content\Content.mgcb" />
+	</ItemGroup>
 </Project>

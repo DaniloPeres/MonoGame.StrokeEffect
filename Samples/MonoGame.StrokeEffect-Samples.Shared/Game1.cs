@@ -67,6 +67,9 @@ namespace MonoGame.StrokeEffect_Samples
 
             graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
+
+            graphics.PreferredBackBufferWidth = 1080;
+            graphics.PreferredBackBufferHeight = 760;
         }
 
         protected override void Initialize()
@@ -255,7 +258,7 @@ namespace MonoGame.StrokeEffect_Samples
 
         private void CreateStroke(Drawables.Image image, Texture2D texture, Color? imageStrokeColor = null)
         {
-            var imageStroke = StrokeEffect.CreateStroke(texture, strokeSize, imageStrokeColor == null ? strokeColor : imageStrokeColor.Value, GraphicsDevice, strokeType);
+            var imageStroke = StrokeEffect.CreateStroke(texture, strokeSize, imageStrokeColor == null ? strokeColor : imageStrokeColor.Value, GraphicsDevice, Content, strokeType);
 
             // Dispose if the previous texture is not pixel
             if (image.texture != imgPixel)
@@ -266,7 +269,7 @@ namespace MonoGame.StrokeEffect_Samples
 
         private void CreateStrokeSpriteFont(Drawables.Image image, SpriteFont spriteFont, string text, Vector2? scale = null, Color? textStrokeColor = null, Color? textColor = null)
         {
-            var textStroke = StrokeEffect.CreateStrokeSpriteFont(spriteFont, text, textColor == null ? Color.Black : textColor.Value, scale ?? Vector2.One, strokeSize, textStrokeColor == null ? strokeColor : textStrokeColor.Value, GraphicsDevice, strokeType);
+            var textStroke = StrokeEffect.CreateStrokeSpriteFont(spriteFont, text, textColor == null ? Color.Black : textColor.Value, scale ?? Vector2.One, strokeSize, textStrokeColor == null ? strokeColor : textStrokeColor.Value, GraphicsDevice, Content, strokeType);
 
             // Dispose if the previous texture is not pixel
             if (image.texture != imgPixel)
