@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
+using System.Reflection;
 
 namespace MonoGame;
 
@@ -9,12 +10,12 @@ public static partial class StrokeEffect
     private static Effect strokeEffectCache;
     private static SpriteBatch spriteBatchMemory;
 
-    public static Texture2D CreateStroke(Texture2D src, int size, Color color, GraphicsDevice graphics, ContentManager contentManager, StrokeType strokeType = StrokeType.OutlineAndTexture)
+    public static Texture2D CreateStroke(Texture2D src, int size, Color color, GraphicsDevice graphics, StrokeType strokeType = StrokeType.OutlineAndTexture)
     {
 
         lock (graphics)
         {
-            var effect = GetEffectStroke(contentManager);
+            var effect = GetEffectStroke(graphics);
 
             // create a render target with margins
             using var renderTargetResize = new RenderTarget2D(graphics, src.Width + size * 2, src.Height + size * 2);
@@ -59,9 +60,20 @@ public static partial class StrokeEffect
         return spriteBatchMemory;
     }
 
-    private static Effect GetEffectStroke(ContentManager contentManager)
+    private static Effect GetEffectStroke(GraphicsDevice graphics)
     {
-        strokeEffectCache ??= contentManager.Load<Effect>("StrokeEffect");
+        if (strokeEffectCache == null)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = $"MonoGame.StrokeEffect.Content.bin.DesktopGL.Content.StrokeEffect.xnb";
+
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            using var ms = new MemoryStream();
+            stream.CopyTo(ms);
+            var content = new XnbContentManager(ms, graphics);
+            strokeEffectCache = content.Load<Effect>();
+        }
+
         return strokeEffectCache;
     }
 }

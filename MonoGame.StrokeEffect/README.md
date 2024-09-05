@@ -15,7 +15,7 @@ We use a shader effect to generate the Stroke effect.
 int strokeSize = 3;
 Color strokeColor = Color.Black;
 StrokeType strokeType = StrokeType.OutlineAndTexture;
-var textureWithStroke = StrokeEffect.CreateStroke(myTexture, strokeSize, strokeColor, GraphicsDevice, Content, strokeType);
+var textureWithStroke = StrokeEffect.CreateStroke(myTexture, strokeSize, strokeColor, GraphicsDevice, strokeType);
 ```
 
 ## 
@@ -26,7 +26,7 @@ Vector2 scale = Vector2.One;
 int strokeSize = 3;
 Color strokeColor = Color.Black;
 StrokeType strokeType = StrokeType.OutlineAndTexture;
-var textStroke = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "My Text", textColor, scale, strokeSize, strokeColor, GraphicsDevice, Content, strokeType);
+var textStroke = StrokeEffect.CreateStrokeSpriteFont(arialSpriteFont, "My Text", textColor, scale, strokeSize, strokeColor, GraphicsDevice, strokeType);
 ```
 
 ## License
