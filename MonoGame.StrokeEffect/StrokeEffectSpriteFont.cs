@@ -13,14 +13,16 @@ public static partial class StrokeEffect
         using var unscaledTextTexture = DrawSpriteFontToTexture2D(spriteFont, text, textColor, graphics);
 
         // Step 2: Create stroke on unscaled texture
-        using var strokedTexture = CreateStroke(unscaledTextTexture, strokeSize, strokeColor, graphics, strokeType);
+        var strokedTexture = CreateStroke(unscaledTextTexture, strokeSize, strokeColor, graphics, strokeType);
 
         // Step 3: Scale stroked texture to final size
         if (scale != Vector2.One)
         {
             int scaledWidth = (int)(strokedTexture.Width * scale.X);
             int scaledHeight = (int)(strokedTexture.Height * scale.Y);
-            return ScaleTexture(strokedTexture, scaledWidth, scaledHeight, graphics);
+            var scaledTexture = ScaleTexture(strokedTexture, scaledWidth, scaledHeight, graphics);
+            strokedTexture.Dispose();
+            return scaledTexture;
         }
 
         return strokedTexture;
